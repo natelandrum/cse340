@@ -1,0 +1,32 @@
+@media (min-width: 800px) {
+    .hero-text {
+            top: 12vh;
+            left: 8vw;
+    }
+    
+    .grid-container {
+        display: grid;
+        justify-items: center;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .reviews {
+        grid-column: 2 / 3;
+    }
+
+    .upgrades {
+        grid-row: 1 / 2;
+    }
+
+    .wrapper {
+        padding: 1rem;
+        border: 5px solid rgb(11, 60, 205);
+        border-radius: 2%;
+        margin: 1rem 4rem 1rem 4rem;
+    }
+
+    body {
+        background-image: url(../images/site/small_check.jpg);
+    }
+}

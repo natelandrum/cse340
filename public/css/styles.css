@@ -1,6 +1,151 @@
-/******* Change Box Model ***************/
-*,
-*:before,
-*:after {
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  line-height: 1.5;
+  margin: 2rem;
+}
+
+.wrapper {
+  background: white;
+}
+
+.siteName {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+h2,
+h3 {
+  font-family: 'Times New Roman', Times, serif;
+  margin-bottom: 1rem;
+}
+
+header a {
+  text-decoration: none;
+  color: #333;
+}
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav li {
+  display: list-item;
+  color: aliceblue;
+  flex-grow: 1;
+  background: #333;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav li:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.hero {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.hero picture {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+}
+
+.hero picture img {
+  width: 80%;
+  height: auto;
+  max-width: 950px;
+}
+
+.hero-text img {
+  min-width: 100px;
+  width: 12vw;
+}
+
+.hero-text img:hover {
+  transform: scale(1.1);
+}
+
+.hero-text {
+  position: absolute;
+  top: 2vh;
+  left: 5vw;
+  background: rgba(245, 243, 243, 0.655);
+  color: rgb(11, 60, 205);
+  width: fit-content;
+  font-size: calc(6px + 1.5vw);
+  padding: 1rem;
+}
+
+.hero-text p:first-of-type {
+  font-size: calc(6px + 1.7vw);
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+.reviews {
+  margin-top: 1rem;
+}
+
+.reviews ul {
+  margin-left: 2rem;
+}
+
+.reviews li {
+  margin-bottom: 1rem;
+  justify-content: space-between;
+}
+
+.upgrades {
+  margin-top: 1rem;
+}
+
+.upgrades-grid {
+  display: grid;
+  width: fit-content;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.upgrade-item {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.upgrades a:hover {
+  color: rgb(0, 175, 211);
+
+}
+
+.image-container {
+  background: rgb(11, 60, 205);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 125px;
+  height: 100px;
 }

@@ -14,3 +14,12 @@ node_modules
 
 # .DS_Store is only for Mac users
 **/.DS_Store
+
+# .vscode is a folder created by Visual Studio Code
+.vscode
+
+# Readme.md file contains a brief overview of how to make use of these starter files and folders
+README.md
+
+# pnpm-lock.yaml is a file created by pnpm
+pnpm-lock.yaml
