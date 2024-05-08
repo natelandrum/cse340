@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: #333;
   line-height: 1.5;
   margin: 2rem;
@@ -22,7 +22,7 @@ body {
 
 h2,
 h3 {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   margin-bottom: 1rem;
 }
 
@@ -31,6 +31,9 @@ header a {
   color: #333;
 }
 
+header {
+  width: 100%;
+}
 #top-header {
   display: flex;
   justify-content: space-between;
@@ -40,8 +43,7 @@ header a {
 nav {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
-  margin-right: 1rem;
+  margin: 1rem auto;
 }
 
 nav ul {
@@ -50,8 +52,6 @@ nav ul {
 }
 
 nav li {
-  display: list-item;
-  color: aliceblue;
   flex-grow: 1;
   background: #333;
   padding: 1rem;
@@ -60,6 +60,11 @@ nav li {
 
 nav li:hover {
   background: rgba(0, 0, 0, 0.5);
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
 }
 
 .hero {
@@ -138,7 +143,6 @@ nav li:hover {
 
 .upgrades a:hover {
   color: rgb(0, 175, 211);
-
 }
 
 .image-container {
@@ -149,4 +153,52 @@ nav li:hover {
   justify-content: center;
   width: 125px;
   height: 100px;
+}
+
+#inv-display {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+#inv-display li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 300px;
+  border: #bbb4b4 1px solid;
+  border-radius: 5%;
+}
+
+#inv-display li:hover {
+  transform: scale(1.1);
+}
+
+#inv-display img {
+  margin: 0 auto 1rem auto;
+  height: 100px;
+}
+
+.namePrice {
+  text-align: center;
+}
+
+.namePrice span {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.error-img {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.error-img img {
+  width: 80%;
+  max-width: 800px;
 }
