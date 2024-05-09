@@ -202,3 +202,27 @@ nav a {
   width: 80%;
   max-width: 800px;
 }
+
+.details,
+.price,
+.firstWord {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.indent {
+  margin-left: 1rem;
+}
+
+.detail-grid {
+  margin: 1rem auto;
+}
+
+.detail-grid img {
+  width: 100%;
+  height: auto;
+}
+
+.detail-info * {
+  margin-bottom: 1rem;
+}

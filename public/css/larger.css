@@ -29,4 +29,10 @@
   body {
     background-image: url(../images/site/small_check.jpg);
   }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
 }

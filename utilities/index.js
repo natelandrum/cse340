@@ -52,6 +52,23 @@ Util.buildByClassificationGrid = async function (data) {
   return `<ul id="inv-display">${gridItems}</ul>`;
 };
 
+Util.buildDetailPage = async function (data) {
+  return `
+    <div class="detail-grid">
+      <img src="${data.inv_image}" alt="Image of ${data.inv_make} ${data.inv_model}" />
+      <div class="detail-info">
+        <p class="details">${data.inv_make} ${data.inv_model} Details</p>
+        <div class="indent">
+          <p class="price">Price: $${new Intl.NumberFormat("en-US").format(data.inv_price)}</p>
+          <p class="description"><span class="firstWord">Description:</span> ${data.inv_description}</p>
+          <p class="color"><span class="firstWord">Color:</span> ${data.inv_color}</p>
+          <p class="miles"><span class="firstWord">Miles:</span>: ${new Intl.NumberFormat("en-US").format(data.inv_miles)}</p>
+        </div>
+        </div>
+    </div>
+      `;
+};
+
 Util.handleErrors = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
 
