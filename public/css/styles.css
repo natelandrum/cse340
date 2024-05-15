@@ -226,3 +226,159 @@ nav a {
 .detail-info * {
   margin-bottom: 1rem;
 }
+
+.login-container {
+  background-color: #2e3b4e;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  min-width: 50vw;
+  margin-bottom: 2rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form label {
+  color: aliceblue;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form input {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-form button {
+  padding: 10px;
+  background: #1e0af8;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  width: 400px;
+  align-self: center;
+}
+
+.login-form button:hover {
+  background-color: #1c86ee;
+}
+
+.signup-link {
+  color: aliceblue;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.signup-link a {
+  color: #9cd6ff;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+.center-flex {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.register-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 50vw;
+  margin-bottom: 2rem;
+}
+
+.register-container h1 {
+  margin: 0 0 10px 0;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form label {
+  color: #000;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form input {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.register-form button {
+  padding: 10px;
+  background-color: #2104b2;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper img {
+  height: 38px;
+  position: absolute;
+  right: 5px;
+  top: 60%;
+  transform: translateY(-60%);
+}
+
+.register-form button:hover {
+  background-color: #0056b3;
+}
+
+input:valid {
+  background-color: ivory;
+  border: none;
+  outline: 2px solid green;
+  border-radius: 5px;
+}
+
+input:invalid {
+  border: none;
+  outline: 2px solid red;
+  border-radius: 5px;
+}
+
+.line {
+  position: absolute;
+  right: 5px;
+  top: 55%;
+  transform: translateY(-55%);
+  width: 37px;
+  height: 2px;
+  background-color: black;
+  transform: rotate(45deg);
+}
+
+.notice {
+  color: red;
+  font-size: 0.8rem;
+  margin: 1rem;
+}
