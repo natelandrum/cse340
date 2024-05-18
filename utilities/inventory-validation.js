@@ -90,7 +90,8 @@ validate.addVehicleRules = () => {
             .escape(),
             body("inv_miles")
             .isNumeric()
-            .withMessage("Mileage must be a number.")
+            .isInt()
+            .withMessage("Mileage must be an integer.")
             .trim()
             .escape(),
         body("inv_color")
