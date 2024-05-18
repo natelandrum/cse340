@@ -1,7 +1,7 @@
 <%- messages() %>
 <% if (errors) { %>
   <ul class="notice">
- <% errors.array().forEach(error => { %>
+ <% errors.forEach(error => { %>
    <li><%= error.msg %></li>
 <%  }) %>
  </ul>
@@ -11,27 +11,28 @@
 <div class="register-container">
     <% if (title) { %>
     <h1><%= title %></h1>
-    <% } else {
-    res.redirect('/')
-    } %>
+    <% } %>
         <form class="register-form" action="/account/register" method="post">
             
             <label>
                 First name
                 <input type="text" name="account_firstname" required
-                autocomplete="given-name">
+                autocomplete="given-name"
+                value="<%= locals.account_firstname %>">
             </label>
             
             <label>
                 Last name
                 <input type="text" name="account_lastname" required
-                autocomplete="family-name">
+                autocomplete="family-name"
+                value="<%= locals.account_lastname %>">
             </label>
             
             <label>
                 Email address
                 <input type="email" name="account_email" required
-                autocomplete="email">
+                autocomplete="email"
+                value="<%= locals.account_email %>">
             </label>
             
             <div class="password-wrapper">

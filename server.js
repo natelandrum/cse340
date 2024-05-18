@@ -12,26 +12,25 @@ const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const utilities = require("./utilities");
 
-app.use(session({
-  store: new (require("connect-pg-simple")(session))( {
-    createTableIfMissing: true,
-    pool,
+app.use(
+  session({
+    store: new (require("connect-pg-simple")(session))({
+      createTableIfMissing: true,
+      pool,
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    name: "sessionId",
   }),
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  name: "sessionId",
-  }))
+);
 
-app.use(require("connect-flash")())
-.use((req, res, next) => {
+app.use(require("connect-flash")()).use((req, res, next) => {
   res.locals.messages = require("express-messages")(req, res);
   next();
 });
 
-app.use(bodyParser.json())
-.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(bodyParser.json()).use(bodyParser.urlencoded({ extended: true }));
 
 app
   .set("view engine", "ejs")
@@ -49,7 +48,9 @@ app
 
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav();
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+  console.error(
+    `Error at: "${req.originalUrl}": ${err.message}`,
+  );
   if (err.status == 404) {
     message = err.message;
   } else {

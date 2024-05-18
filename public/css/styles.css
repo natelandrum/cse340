@@ -353,14 +353,16 @@ nav a {
   background-color: #0056b3;
 }
 
-input:valid {
+input:valid,
+textarea:valid {
   background-color: ivory;
   border: none;
   outline: 2px solid green;
   border-radius: 5px;
 }
 
-input:invalid {
+input:invalid,
+textarea:invalid {
   border: none;
   outline: 2px solid red;
   border-radius: 5px;
@@ -379,6 +381,82 @@ input:invalid {
 
 .notice {
   color: red;
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin: 1rem;
+}
+
+.management a {
+  font-size: 1rem;
+  display: block;
+  margin: 1rem;
+}
+
+.addClassification,
+.addVehicle {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}
+
+.addVehicle select option {
+  padding: 10px;
+  margin: 10px;
+}
+
+.addVehicle select {
+  display: block;
+}
+
+.addClassification form,
+.addVehicle form {
+  background-color: #ffffff;
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 50vw;
+  max-width: 450px;
+}
+
+.addClassification label,
+.addVehicle label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.addClassification h2,
+.addVehicle h2 {
+  font-size: 14px;
+  color: #1e90ff; /* Dodger blue */
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.addClassification input[type="text"],
+.addVehicle input[type="text"],
+.addVehicle input[type="number"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #1e90ff;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.addClassification button,
+.addVehicle button {
+  background-color: #1e90ff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.addClassification button:hover,
+.addVehicle button:hover {
+  background-color: #1c86ee;
 }

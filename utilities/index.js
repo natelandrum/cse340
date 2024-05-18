@@ -69,6 +69,28 @@ Util.buildDetailPage = async function (data) {
       `;
 };
 
+Util.buildManagementPage = async function () {
+  return `
+    <div class="management">
+      <a href="/inv/add-classification" title="Add a classification to the inventory">Add a New Classification</a>
+      <a href="/inv/add-vehicle" title="Add a vehicle to the inventory">Add a New Vehicle</a>
+    </div>
+    `;
+};
+
+Util.buildClassificationList = async function (classification_id = null) {
+  const { rows } = await invModel.getClassifications();
+  return rows
+    .map(
+      (row) => `
+    <option value="${row.classification_id}" ${row.classification_id == classification_id ? "selected" : ""}>
+      ${row.classification_name}
+    </option>
+  `,
+    )
+    .join("");
+  }
+
 Util.handleErrors = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
 

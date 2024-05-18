@@ -7,10 +7,19 @@ router.get("/login", accountController.buildLogin);
 router.get("/register", accountController.buildRegistration);
 
 router.post(
-    "/register",
-    regValidate.registrationRules(),
-    regValidate.checkRegData,
-    accountController.registerAccount
+  "/register",
+  regValidate.registrationRules(),
+  regValidate.checkRegData,
+  accountController.registerAccount,
+);
+
+router.post(
+  "/login",
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  (req, res) => {
+    res.status(200).send("Login successful");
+  },
 );
 
 module.exports = router;
