@@ -80,7 +80,7 @@ Util.buildManagementPage = async function () {
 
 Util.buildClassificationList = async function (classification_id = null) {
   const { rows } = await invModel.getClassifications();
-  return rows
+  let options =  rows
     .map(
       (row) => `
     <option value="${row.classification_id}" ${row.classification_id == classification_id ? "selected" : ""}>
@@ -89,6 +89,10 @@ Util.buildClassificationList = async function (classification_id = null) {
   `,
     )
     .join("");
+  
+  options = `<option ${options.includes("selected") ? "" : "selected"} disabled value="">Select a classification</option>` + options;
+
+  return options;
   }
 
 Util.handleErrors = (fn) => (req, res, next) =>

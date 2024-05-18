@@ -350,7 +350,7 @@ nav a {
 }
 
 .register-form button:hover {
-  background-color: #0056b3;
+  background: #0056b3;
 }
 
 input:valid,
@@ -364,7 +364,7 @@ textarea:valid {
 input:invalid,
 textarea:invalid {
   border: none;
-  outline: 2px solid red;
+  outline: 2px solid rgb(203, 15, 15);
   border-radius: 5px;
 }
 
@@ -380,7 +380,7 @@ textarea:invalid {
 }
 
 .notice {
-  color: red;
+  color: rgb(203, 15, 15);
   font-size: 1rem;
   margin: 1rem;
 }
@@ -428,7 +428,7 @@ textarea:invalid {
 .addClassification h2,
 .addVehicle h2 {
   font-size: 14px;
-  color: #1e90ff; /* Dodger blue */
+  color: #1F6ACA;
   margin-top: 0;
   margin-bottom: 15px;
 }
@@ -440,14 +440,13 @@ textarea {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #1e90ff;
   border-radius: 4px;
   box-sizing: border-box;
 }
 
 .addClassification button,
 .addVehicle button {
-  background-color: #1e90ff;
+  background: #1F6ACA;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -458,5 +457,5 @@ textarea {
 
 .addClassification button:hover,
 .addVehicle button:hover {
-  background-color: #1c86ee;
+  background: #1957a9;
 }
