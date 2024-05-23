@@ -77,17 +77,7 @@ validate.loginRules = () => {
         minNumbers: 1,
         minSymbols: 1,
       })
-      .withMessage("Password does not meet requirements.")
-      .custom(async (account_password, { req }) => {
-        const account_email = req.body.account_email;
-        const comboExists = await accountModel.checkPasswordCombo(
-          account_email,
-          account_password,
-        );
-        if (!comboExists) {
-          throw new Error("Wrong password. Please try again.");
-        }
-      }),
+      .withMessage("Password does not meet requirements."),
   ];
 };
 
