@@ -5,3 +5,21 @@
 <%- messages() %>
 
 <%- grid %>
+
+<h2>Manage Inventory</h2>
+<div class="management">
+    <label>Select a classification to see those inventory items.
+        <select name="classificationList" id="classificationList">
+            <%- classificationSelect %>
+        </select>
+    </label>
+</div>
+
+
+<div class="management">
+    <table id="inventoryDisplay"></table>
+</div>
+
+<noscript>JavaScript must be enabled to use this page.</noscript>
+
+<script src="/js/inventory.js"></script>

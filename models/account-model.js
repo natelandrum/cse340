@@ -35,14 +35,12 @@ async function checkExistingEmail(account_email) {
 async function getAccountByEmail(account_email) {
   try {
     const sql = "SELECT * FROM account WHERE account_email = $1";
-    return await pool.query(sql, [account_email])
-      .then((result) => {
-        return result.rows[0];
-      });
+    return await pool.query(sql, [account_email]).then((result) => {
+      return result.rows[0];
+    });
   } catch (err) {
     return new Error("No matching email found.");
   }
-
 }
 
 module.exports = {

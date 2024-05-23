@@ -12,6 +12,10 @@ router.get("/add-classification", invController.buildAddClassificationPage);
 
 router.get("/add-vehicle", invController.buildAddVehiclePage);
 
+router.get("/getInventory/:classification_id", invController.getInventoryJSON);
+
+router.get("/edit/:invId", invController.buildEditPage);
+
 router.post(
   "/add-classification",
   invValidate.addClassificationRules(),
@@ -20,10 +24,17 @@ router.post(
 );
 
 router.post(
-    "/add-vehicle",
-    invValidate.addVehicleRules(),
-    invValidate.checkVehicleData,
-    invController.addVehicle,
+  "/add-vehicle",
+  invValidate.addVehicleRules(),
+  invValidate.checkVehicleData,
+  invController.addVehicle,
+);
+
+router.post(
+  "/edit/:invId",
+  invValidate.addVehicleRules(),
+  invValidate.checkUpdateData,
+  invController.updateVehicle,
 );
 
 module.exports = router;

@@ -7,11 +7,6 @@ router.get("/login", accountController.buildLogin);
 
 router.get("/register", accountController.buildRegistration);
 
-router.get("/",
-  utilities.checkLogin,
-  accountController.buildAccountManagement
-);
-
 router.post(
   "/register",
   regValidate.registrationRules(),
@@ -25,5 +20,7 @@ router.post(
   regValidate.checkLoginData,
   accountController.accountLogin,
 );
+
+router.get("/", utilities.checkLogin(), accountController.buildAccount);
 
 module.exports = router;

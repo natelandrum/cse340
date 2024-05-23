@@ -392,23 +392,27 @@ textarea:invalid {
 }
 
 .addClassification,
-.addVehicle {
+.addVehicle,
+editVehicle {
   display: flex;
   justify-content: center;
   margin: 1rem;
 }
 
-.addVehicle select option {
+.addVehicle select option,
+.editVehicle select option {
   padding: 10px;
   margin: 10px;
 }
 
-.addVehicle select {
+.addVehicle select,
+.editVehicle select {
   display: block;
 }
 
 .addClassification form,
-.addVehicle form {
+.addVehicle form,
+.editVehicle form {
   background-color: #ffffff;
   border: 1px solid #000;
   border-radius: 8px;
@@ -419,16 +423,18 @@ textarea:invalid {
 }
 
 .addClassification label,
-.addVehicle label {
+.addVehicle label,
+.editVehicle label {
   display: block;
   margin-bottom: 10px;
   font-weight: bold;
 }
 
 .addClassification h2,
-.addVehicle h2 {
+.addVehicle h2,
+.editVehicle h2 {
   font-size: 14px;
-  color: #1F6ACA;
+  color: #1f6aca;
   margin-top: 0;
   margin-bottom: 15px;
 }
@@ -436,7 +442,9 @@ textarea:invalid {
 .addClassification input[type="text"],
 .addVehicle input[type="text"],
 .addVehicle input[type="number"],
-textarea {
+textarea,
+.editVehicle input[type="text"],
+.editVehicle input[type="number"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
@@ -445,8 +453,9 @@ textarea {
 }
 
 .addClassification button,
-.addVehicle button {
-  background: #1F6ACA;
+.addVehicle button,
+.editVehicle button {
+  background: #1f6aca;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -456,6 +465,52 @@ textarea {
 }
 
 .addClassification button:hover,
-.addVehicle button:hover {
+.addVehicle button:hover,
+.editVehicle button:hover {
   background: #1957a9;
+}
+
+.management label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.5em;
+}
+
+#classificationList {
+  max-width: 400px;
+  width: 100%;
+  padding: 0.5em;
+  font-size: 1em;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+.management table {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 5%;
+}
+
+.management thead {
+  background-color: #a59f9f;
+}
+
+.management th,
+.management td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.management tr:nth-child(even) {
+  background-color: #fbbebe;
+}
+
+.management a {
+  color: #333;
+  text-decoration: none;
+}
+
+.management a:hover {
+  color: #007bff;
 }

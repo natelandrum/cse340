@@ -82,7 +82,7 @@ Util.buildManagementPage = async function () {
 
 Util.buildClassificationList = async function (classification_id = null) {
   const { rows } = await invModel.getClassifications();
-  let options =  rows
+  let options = rows
     .map(
       (row) => `
     <option value="${row.classification_id}" ${row.classification_id == classification_id ? "selected" : ""}>
@@ -91,11 +91,13 @@ Util.buildClassificationList = async function (classification_id = null) {
   `,
     )
     .join("");
-  
-  options = `<option ${options.includes("selected") ? "" : "selected"} disabled value="">Select a classification</option>` + options;
+
+  options =
+    `<option ${options.includes("selected") ? "" : "selected"} disabled value="">Select a classification</option>` +
+    options;
 
   return options;
-  }
+};
 
 Util.handleErrors = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
@@ -103,30 +105,31 @@ Util.handleErrors = (fn) => (req, res, next) =>
 Util.checkJWTToken = (req, res, next) => {
   if (req.cookies.jwt) {
     jwt.verify(
-      req.cookies.jwt, 
-      process.env.ACCESS_TOKEN_SECRET, 
-      (err, accountData) => {
-      if (err) {
-        req.flash("Please log in.")
-        res.clearCookie("jwt");
-        return res.redirect("/account/login");
-      } 
-      res.locals.accountData = accountData;
-      res.locals.loggedIn = 1;
-      next();
-    });
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in");
+          res.clearCookie("jwt");
+          return res.redirect("/account/login");
+        }
+        res.locals.accountData = accountData;
+        res.locals.loggedin = 1;
+        next();
+      },
+    );
   } else {
     next();
   }
-}
+};
 
- Util.checkLogin = (req, res, next) => {
+Util.checkLogin = () => (req, res, next) => {
   if (res.locals.loggedin) {
-    next()
+    next();
   } else {
-    req.flash("notice", "Please log in.")
-    return res.redirect("/account/login")
+    req.flash("Please log in");
+    res.redirect("/account/login");
   }
- }
+};
 
 module.exports = Util;

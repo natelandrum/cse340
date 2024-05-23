@@ -62,16 +62,77 @@ async function addClassification(classification_name) {
   }
 }
 
-async function addVehicle(classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) {
+async function addVehicle(
+  classification_id,
+  inv_make,
+  inv_model,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_year,
+  inv_miles,
+  inv_color,
+) {
   try {
     await pool.query(
       `INSERT INTO inventory (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-      [classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color],
+      [
+        classification_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+      ],
     );
     return true;
   } catch (error) {
     console.error(`addvehicle error: ${error}`);
+    return false;
+  }
+}
+
+async function updateVehicle(
+  classification_id,
+  inv_make,
+  inv_model,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_year,
+  inv_miles,
+  inv_color,
+  inv_id,
+) {
+  try {
+    const data = await pool.query(
+      `UPDATE inventory
+      SET classification_id = $1, inv_make = $2, inv_model = $3, inv_description = $4, inv_image = $5, inv_thumbnail = $6, inv_price = $7, inv_year = $8, inv_miles = $9, inv_color = $10
+      WHERE inv_id = $11 RETURNING *`,
+      [
+        classification_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+        inv_id,
+      ],
+    );
+    return data.rows[0];
+  } catch (error) {
+    console.error(`editvehicle error: ${error}`);
     return false;
   }
 }
@@ -83,4 +144,5 @@ module.exports = {
   addClassification,
   addVehicle,
   getClassificationById,
+  updateVehicle,
 };
