@@ -52,14 +52,14 @@ invCont.buildManagementPage = async function (req, res, next) {
   try {
     const grid = await utilities.buildManagementPage();
     let nav = await utilities.getNav();
-    const classificationSelect = await utilities.buildClassificationList();
+    const classifications = await utilities.buildClassificationList();
     const description = "Inventory Management Page";
     res.render("./inventory/management", {
       title: "Inventory Management",
       nav,
       grid,
       description,
-      classificationSelect,
+      classifications,
     });
   } catch (error) {
     next({
@@ -186,6 +186,7 @@ invCont.addVehicle = async (req, res, next) => {
       );
       res.status(201).render("./inventory/management", {
         title: "Inventory Management",
+        classifications,
         nav,
         grid,
         description,
@@ -331,5 +332,61 @@ invCont.buildEditPage = async function (req, res, next) {
     });
   }
 };
+
+invCont.buildDeletePage = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.params.invId);
+    let nav = await utilities.getNav();
+    const description = "Delete Vehicle Page";
+    invData = await invModel.getInventoryDetail(inv_id);
+    const name = `${invData.inv_make} ${invData.inv_model}`;
+    res.render("./inventory/delete-confirm", {
+      title: "Delete " + name,
+      nav,
+      description,
+      errors: null,
+      inv_id,
+      inv_make: invData.inv_make,
+      inv_model: invData.inv_model,
+      inv_price: invData.inv_price,
+      inv_year: invData.inv_year,
+    });
+  } catch (error) {
+    next({
+      status: "Server Error",
+      message: "Delete Vehicle Page Error.",
+    });
+  }
+}
+
+invCont.deleteVehicle = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.params.invId);
+    const invData = await invModel.getInventoryDetail(inv_id);
+    const deleteResult = await invModel.deleteVehicle(inv_id);
+    if (deleteResult) {
+      req.flash("notice", `You deleted ${invData.inv_make} ${invData.inv_model}.`);
+      res.redirect("/inv");
+    } else {
+      req.flash("notice", "Sorry, could not delete vehicle. Please try again.");
+      res.status(501).render("./inventory/delete-confirm", {
+        title: "Delete " + name,
+        nav,
+        description,
+        errors: null,
+        inv_id,
+        inv_make: invData.inv_make,
+        inv_model: invData.inv_model,
+        inv_price: invData.inv_price,
+        inv_year: invData.inv_year,
+      });
+      }
+  } catch (error) {
+    next({
+      status: "Server Error",
+      message: "Delete Vehicle Error.",
+    });
+  }
+}
 
 module.exports = invCont;

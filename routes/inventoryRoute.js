@@ -16,6 +16,8 @@ router.get("/getInventory/:classification_id", invController.getInventoryJSON);
 
 router.get("/edit/:invId", invController.buildEditPage);
 
+router.get("/delete/:invId", invController.buildDeletePage);
+
 router.post(
   "/add-classification",
   invValidate.addClassificationRules(),
@@ -36,5 +38,7 @@ router.post(
   invValidate.checkUpdateData,
   invController.updateVehicle,
 );
+
+router.post("/delete/:invId", invController.deleteVehicle);
 
 module.exports = router;

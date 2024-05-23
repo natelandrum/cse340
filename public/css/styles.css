@@ -393,7 +393,8 @@ textarea:invalid {
 
 .addClassification,
 .addVehicle,
-editVehicle {
+.editVehicle,
+.deleteVehicle {
   display: flex;
   justify-content: center;
   margin: 1rem;
@@ -412,7 +413,8 @@ editVehicle {
 
 .addClassification form,
 .addVehicle form,
-.editVehicle form {
+.editVehicle form,
+.deleteVehicle form{
   background-color: #ffffff;
   border: 1px solid #000;
   border-radius: 8px;
@@ -424,7 +426,8 @@ editVehicle {
 
 .addClassification label,
 .addVehicle label,
-.editVehicle label {
+.editVehicle label,
+.deleteVehicle label{
   display: block;
   margin-bottom: 10px;
   font-weight: bold;
@@ -432,11 +435,16 @@ editVehicle {
 
 .addClassification h2,
 .addVehicle h2,
-.editVehicle h2 {
+.editVehicle h2,
+.deleteVehicle h2 {
   font-size: 14px;
   color: #1f6aca;
   margin-top: 0;
   margin-bottom: 15px;
+}
+
+.deleteVehicle h2 {
+  color: #a91f1f;
 }
 
 .addClassification input[type="text"],
@@ -444,7 +452,9 @@ editVehicle {
 .addVehicle input[type="number"],
 textarea,
 .editVehicle input[type="text"],
-.editVehicle input[type="number"] {
+.editVehicle input[type="number"],
+.deleteVehicle input[type="text"],
+.deleteVehicle input[type="number"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
@@ -454,7 +464,8 @@ textarea,
 
 .addClassification button,
 .addVehicle button,
-.editVehicle button {
+.editVehicle button,
+.deleteVehicle button {
   background: #1f6aca;
   color: #ffffff;
   border: none;
@@ -464,10 +475,19 @@ textarea,
   font-size: 16px;
 }
 
+.deleteVehicle button {
+  background: #a91f1f;
+}
+
 .addClassification button:hover,
 .addVehicle button:hover,
 .editVehicle button:hover {
   background: #1957a9;
+}
+
+.deleteVehicle button:hover {
+  background: #a91f1f;
+
 }
 
 .management label {
@@ -509,6 +529,7 @@ textarea,
 .management a {
   color: #333;
   text-decoration: none;
+  width: fit-content;
 }
 
 .management a:hover {
