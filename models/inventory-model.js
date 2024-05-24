@@ -159,5 +159,5 @@ module.exports = {
   addVehicle,
   getClassificationById,
   updateVehicle,
-  deleteVehicle
+  deleteVehicle,
 };

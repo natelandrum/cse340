@@ -1,0 +1,65 @@
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } %>
+
+<h2>Welcome <%= locals.accountData.account_firstname %></h2>
+<div class="update">
+    <form action="/account/update/info" method="post">
+        <h2>Update Basic Information</h2>
+        <label>
+            First name
+            <input type="text" name="account_firstname" required
+            value="<%= locals.account_firstname %>">
+        </label>
+        
+        <label>
+            Last name
+            <input type="text" name="account_lastname" required
+            value="<%= locals.account_lastname %>">
+        </label>
+        
+        <label>
+            Email address
+            <input type="email" name="account_email" required
+            value="<%= locals.account_email %>">
+        </label>
+
+        <button type="submit">Update Account</button>
+        <input type="hidden" name="account_id"
+            <% if(locals.account_id) { %> value="<%= locals.account_id %>"
+            <% } %>>
+        <input type="hidden" name="old_email"
+            <% if(locals.account_email) { %> value="<%= locals.account_email %>"
+            <% } %>>
+    </form>
+
+    <form action="/account/update/password" method="post">
+        <div class="password-wrapper">
+            <h2>Update Password: <span>This will change your current password!</span></h2>
+            <label>
+                Password
+                <input type="password" name="account_password" required 
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" 
+                title="Minimum:&#010;12 characters&#010;1 capital letter&#010;1 number&#010;1 special character"
+                autocomplete="new-password">
+            </label>
+            <img src="/images/site/eye.svg" alt="Eye SVG by Dazzle UI">
+            <div class="line"></div>
+        </div>
+        <button type="submit">Update Password</button>
+        <input type="hidden" name="account_id"
+            <% if(locals.account_id) { %> value="<%= locals.account_id %>"
+            <% } %>>
+    </form>
+</div>
+<script src="/js/password.js"></script>

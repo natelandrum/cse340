@@ -109,7 +109,7 @@ Util.checkJWTToken = (req, res, next) => {
       process.env.ACCESS_TOKEN_SECRET,
       function (err, accountData) {
         if (err) {
-          req.flash("Please log in");
+          req.flash("notice", "Please log in");
           res.clearCookie("jwt");
           return res.redirect("/account/login");
         }
@@ -127,9 +127,37 @@ Util.checkLogin = () => (req, res, next) => {
   if (res.locals.loggedin) {
     next();
   } else {
-    req.flash("Please log in");
+    req.flash("notice", "Please log in");
     res.redirect("/account/login");
   }
 };
+
+Util.checkAlreadyLoggedIn = (req, res, next) => {
+  if (res.locals.loggedin) {
+    req.flash("notice", "You are already logged in");
+    res.redirect("/account");
+  } else {
+    next();
+  }
+
+}
+
+Util.checkAccessLevel = (req, res, next) => {
+  if (res.locals.accountData.account_type !== "Client") {
+    next();
+  } else {
+    req.flash("notice", "You do not have access to this page");
+    res.redirect("/account/login");
+  }
+}
+
+Util.checkUserIdentity = (req, res, next) => {
+  if (res.locals.accountData.account_id == req.params.accountId) {
+    next();
+  } else {
+    req.flash("notice", "Access Forbidden");
+    res.status(403).redirect("/account");
+  }
+}
 
 module.exports = Util;

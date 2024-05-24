@@ -357,7 +357,7 @@ invCont.buildDeletePage = async function (req, res, next) {
       message: "Delete Vehicle Page Error.",
     });
   }
-}
+};
 
 invCont.deleteVehicle = async function (req, res, next) {
   try {
@@ -365,7 +365,10 @@ invCont.deleteVehicle = async function (req, res, next) {
     const invData = await invModel.getInventoryDetail(inv_id);
     const deleteResult = await invModel.deleteVehicle(inv_id);
     if (deleteResult) {
-      req.flash("notice", `You deleted ${invData.inv_make} ${invData.inv_model}.`);
+      req.flash(
+        "notice",
+        `You deleted ${invData.inv_make} ${invData.inv_model}.`,
+      );
       res.redirect("/inv");
     } else {
       req.flash("notice", "Sorry, could not delete vehicle. Please try again.");
@@ -380,13 +383,13 @@ invCont.deleteVehicle = async function (req, res, next) {
         inv_price: invData.inv_price,
         inv_year: invData.inv_year,
       });
-      }
+    }
   } catch (error) {
     next({
       status: "Server Error",
       message: "Delete Vehicle Error.",
     });
   }
-}
+};
 
 module.exports = invCont;

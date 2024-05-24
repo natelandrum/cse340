@@ -81,6 +81,57 @@ validate.loginRules = () => {
   ];
 };
 
+validate.updateInfoRules = () => {
+  return [
+    body("account_firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a first name."),
+
+    body("account_lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a last name."),
+
+    body("account_email")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("Please provide a valid email address.")
+      .custom(async (account_email, { req }) => {
+        const emailExists =
+          await accountModel.checkExistingEmail(account_email);
+        if (emailExists && account_email !== req.body.old_email) {
+          throw new Error(
+            "Email exists. Please log in or use a different email."
+          );
+        } 
+      }),
+  ];
+}
+
+validate.updatePasswordRules = () => {
+  return [
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password does not meet requirements."),
+  ];
+}
+
 validate.checkRegData = async (req, res, next) => {
   const { account_firstname, account_lastname, account_email } = req.body;
   let errors = [];
@@ -115,6 +166,47 @@ validate.checkLoginData = async (req, res, next) => {
       description: "Login to your account",
       nav,
       account_email,
+    });
+    return;
+  }
+  next();
+};
+
+validate.checkUpdateInfoData = async (req, res, next) => {
+  const { account_firstname, account_lastname, account_email, account_id } = req.body;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    errors = errors.array().filter((error) => error.msg !== "Invalid value");
+    let nav = await utilities.getNav();
+    res.render("account/update", {
+      errors,
+      title: "Update Account",
+      description: "Update your account",
+      nav,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id,
+    });
+    return;
+  }
+  next();
+};
+
+validate.checkUpdatePasswordData = async (req, res, next) => {
+  const account_id = req.body.account_id;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    errors = errors.array().filter((error) => error.msg !== "Invalid value");
+    let nav = await utilities.getNav();
+    res.render("account/update/" + account_id, {
+      errors,
+      title: "Update Account",
+      description: "Update your account",
+      nav,
+      account_id,
     });
     return;
   }
