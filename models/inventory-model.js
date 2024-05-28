@@ -144,7 +144,18 @@ async function updateVehicle(
   try {
     const data = await pool.query(
       `UPDATE inventory
-      SET classification_id = $1, inv_make = $2, inv_model = $3, inv_description = $4, inv_image = $5, inv_thumbnail = $6, inv_price = $7, inv_year = $8, inv_miles = $9, inv_color = $10
+      SET classification_id = $1,
+      inv_make = $2, 
+      inv_model = $3, 
+      inv_description = $4, 
+      inv_image = $5, 
+      inv_thumbnail = $6, 
+      inv_price = $7, 
+      inv_year = $8, 
+      inv_miles = $9, 
+      inv_color = $10,
+      inv_approved = false,
+      account_id = null
       WHERE inv_id = $11 RETURNING *`,
       [
         classification_id,

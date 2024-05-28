@@ -71,11 +71,11 @@ validate.addVehicleRules = () => {
       .trim()
       .escape(),
     body("inv_image")
-      .matches(/\/images\/vehicles\/[a-zA-Z0-9_]+\.(jpg|png)$/)
+      .matches(/\/images\/vehicles\/.*\.(jpg|png|webp|jpeg)$/)
       .withMessage("Image must be a valid path.")
       .trim(),
     body("inv_thumbnail")
-      .matches(/\/images\/vehicles\/[a-zA-Z0-9_]+(-tn)?\.(jpg|png)$/)
+      .matches(/\/images\/vehicles\/.*\.(jpg|png|webp|jpeg)$/)
       .withMessage("Thumbnail must be a valid path.")
       .trim(),
     body("inv_price")
