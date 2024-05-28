@@ -3,10 +3,40 @@ const pool = require("../database/");
 async function getClassifications() {
   try {
     return await pool.query(
-      "SELECT * FROM classification ORDER BY classification_name",
+      `SELECT c.*, COUNT(i.inv_approved) > 0 as has_approved_inv
+       FROM classification as c
+       LEFT JOIN inventory as i
+       ON c.classification_id = i.classification_id
+       WHERE i.inv_approved = true
+       GROUP BY c.classification_id
+       ORDER BY c.classification_name`,
     );
   } catch (error) {
     console.error(`getclassifications error: ${error}`);
+  }
+}
+
+async function getUnapprovedClassifications() {
+  try {
+    return await pool.query(
+      `SELECT *
+       FROM classification
+       WHERE classification_approved = false`,
+    );
+  } catch (error) {
+    console.error(`getUnapprovedClassifications error: ${error}`);
+  }
+}
+
+async function getUnapprovedInventory() {
+  try {
+    return await pool.query(
+      `SELECT *
+       FROM inventory
+       WHERE inv_approved = false`,
+    );
+  } catch (error) {
+    console.error(`getUnapprovedInventory error: ${error}`);
   }
 }
 
@@ -151,8 +181,72 @@ async function deleteVehicle(inv_id) {
   }
 }
 
+async function approveClassification(classification_id, account_id) {
+  try {
+    await pool.query(
+      `UPDATE classification
+       SET classification_approved = true,
+           account_id = $1,
+           classification_approval_date = CURRENT_TIMESTAMP
+       WHERE classification_id = $2`,
+      [account_id, classification_id],
+    );
+    return true;
+  } catch (error) {
+    console.error(`approveclassification error: ${error}`);
+    return false;
+  }
+}
+
+async function rejectClassification(classification_id) {
+  try {
+    await pool.query(
+      `DELETE FROM classification
+       WHERE classification_id = $1`,
+      [classification_id],
+    );
+    return true;
+  } catch (error) {
+    console.error(`rejectclassification error: ${error}`);
+    return false;
+  }
+}
+
+async function approveVehicle(inv_id, account_id) {
+  try {
+    await pool.query(
+      `UPDATE inventory
+       SET inv_approved = true,
+            account_id = $1,
+            inv_approved_date = CURRENT_TIMESTAMP
+        WHERE inv_id = $2`,
+      [account_id, inv_id],
+    );
+    return true;
+  } catch (error) {
+    console.error(`approvevehicle error: ${error}`);
+    return false;
+  }
+}
+
+async function rejectVehicle(inv_id) {
+  try {
+    await pool.query(
+      `DELETE FROM inventory
+       WHERE inv_id = $1`,
+      [inv_id],
+    );
+    return true;
+  } catch (error) {
+    console.error(`rejectvehicle error: ${error}`);
+    return false;
+  }
+}
+
 module.exports = {
   getClassifications,
+  getUnapprovedClassifications,
+  getUnapprovedInventory,
   getInventoryByClassificationId,
   getInventoryDetail,
   addClassification,
@@ -160,4 +254,8 @@ module.exports = {
   getClassificationById,
   updateVehicle,
   deleteVehicle,
+  approveClassification,
+  approveVehicle,
+  rejectClassification,
+  rejectVehicle,
 };

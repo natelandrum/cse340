@@ -25,4 +25,11 @@
           <a href="/inv">Update Inventory</a>
         </p>
   <% } %>
+
+    <% if (locals.accountData.account_type === "Admin") { %>
+        <h3>Inventory Approval</h3>
+        <p>
+          <a href="/inv/approval">Approve Inventory</a>
+        </p>
+  <% } %>
 </div>

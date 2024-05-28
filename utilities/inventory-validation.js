@@ -2,7 +2,6 @@ const utilities = require(".");
 const { body, validationResult } = require("express-validator");
 const validate = {};
 const invModel = require("../models/inventory-model");
-const { name } = require("ejs");
 
 validate.addClassificationRules = () => {
   return [
@@ -25,7 +24,7 @@ validate.checkClassificationData = async (req, res, next) => {
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
     errors = errors.array().filter((error) => error.msg !== "Invalid value");
-    res.render("inventory/add-classification", {
+    res.render("./inventory/add-classification", {
       title: "Add Classification",
       nav,
       errors,

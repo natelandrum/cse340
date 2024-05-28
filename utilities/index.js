@@ -5,16 +5,20 @@ require("dotenv").config();
 const Util = {};
 
 Util.getNav = async () => {
-  const { rows } = await invModel.getClassifications();
-  const listItems = rows
+  const data = await invModel.getClassifications();
+  const listItems = data.rows
     .map(
-      (row) => `
-  <li>
-    <a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">
-      ${row.classification_name}
-    </a>
-  </li>
-`,
+      (row) => {
+        if (row.classification_approved && row.has_approved_inv) {
+          return `
+          <li>
+            <a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">
+              ${row.classification_name}
+            </a>
+          </li>
+        `
+        }
+      },
     )
     .join("");
 
@@ -27,10 +31,6 @@ Util.getNav = async () => {
 };
 
 Util.buildByClassificationGrid = async function (data) {
-  if (data.length === 0) {
-    return '<p class="notice">Sorry, no matching vehicles could be found.</p>';
-  }
-
   const gridItems = data
     .map(
       (vehicle) => `
@@ -151,6 +151,15 @@ Util.checkAccessLevel = (req, res, next) => {
   }
 }
 
+Util.checkAdminPrivileges = (req, res, next) => {
+  if (res.locals.accountData.account_type === "Admin") {
+    next();
+  } else {
+    req.flash("notice", "You do not have access to this page");
+    res.redirect("/account/login");
+  }
+}
+
 Util.checkUserIdentity = (req, res, next) => {
   if (res.locals.accountData.account_id == req.params.accountId) {
     next();
@@ -159,5 +168,84 @@ Util.checkUserIdentity = (req, res, next) => {
     res.status(403).redirect("/account");
   }
 }
+
+Util.buildApprovalPage = async function () {
+  let data = await invModel.getUnapprovedClassifications();
+  let classifications;
+  if (!data.rows.length) {
+    classifications = `
+      <tr>
+        <td colspan="3">No classifications to approve</td>
+      </tr>
+    `;
+  } else {
+    classifications = data.rows
+      .map(
+        (row) => `
+      <tr>
+        <td>${row.classification_name}</td>
+        <td><a href="/inv/approve/classification/${row.classification_id}" title="Approve ${row.classification_name} classification">Approve</a></td>
+        <td><a href="/inv/reject/classification/${row.classification_id}" title="Reject ${row.classification_name} classification">Reject</a></td>
+      </tr>
+    `,
+      )
+      .join("");
+  }
+  
+  data = await invModel.getUnapprovedInventory();
+  let vehicles;
+  if (data.rows.length === 0) {
+    vehicles = `
+      <tr>
+        <td colspan="4">No vehicles to approve</td>
+      </tr>
+    `;
+  } else {
+    vehicles = data.rows
+      .map(
+        (row) => `
+      <tr>
+        <td>${row.inv_make} ${row.inv_model}</td>
+        <td><a href="#" class="modal-link" data-id="${row.inv_id}" title="View ${row.inv_make} ${row.inv_model}">View</a></td>
+        <td><a href="/inv/approve/vehicle/${row.inv_id}" title="Approve ${row.inv_make} ${row.inv_model}">Approve</a></td>
+        <td><a href="/inv/reject/vehicle/${row.inv_id}" title="Reject ${row.inv_make} ${row.inv_model}">Reject</a></td>
+      </tr>
+    `,
+      )
+      .join("");
+  }
+
+  return `
+    <div class="approval">
+      <h2>Approve Classifications</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Classification</th>
+            <th>Approve</th>
+            <th>Reject</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${classifications}
+        </tbody>
+      </table>
+      <h2>Approve Vehicles</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Vehicle</th>
+            <th>View</th>
+            <th>Approve</th>
+            <th>Reject</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${vehicles}
+        </tbody>
+      </table>
+    </div>
+  `;
+};
 
 module.exports = Util;

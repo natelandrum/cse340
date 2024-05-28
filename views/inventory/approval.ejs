@@ -1,0 +1,25 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+
+<%- grid %>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+  </div>
+</div>
+
+<script src="/js/modal.js"></script>
+
+<noscript>You must have JavaScript enabled to view the vehicle previews</noscript>

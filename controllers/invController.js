@@ -1,4 +1,3 @@
-const { name } = require("ejs");
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities");
 
@@ -7,8 +6,15 @@ const invCont = {};
 invCont.buildByClassificationId = async function (req, res, next) {
   try {
     const classification_id = req.params.classificationId;
-    const data =
+    let data =
       await invModel.getInventoryByClassificationId(classification_id);
+    const approved = data.some((item) => item.inv_approved === true);
+    if (approved) {
+      data = data.filter((item) => item.inv_approved === true);
+    } else {
+      return res.redirect("/");
+    }
+
     const grid = await utilities.buildByClassificationGrid(data);
     let nav = await utilities.getNav();
     const className = data[0].classification_name;
@@ -31,7 +37,13 @@ invCont.buildDetailPage = async function (req, res, next) {
   try {
     const inv_id = req.params.invId;
     const data = await invModel.getInventoryDetail(inv_id);
+    if (!data.inv_approved && req.method === "GET") {
+      return res.redirect("/");
+    }
     const grid = await utilities.buildDetailPage(data);
+    if (req.method === "POST") {
+      return res.send(grid);
+    }
     let nav = await utilities.getNav();
     const description = `Details for ${data.inv_make} ${data.inv_model}`;
     res.render("./inventory/detail", {
@@ -41,10 +53,8 @@ invCont.buildDetailPage = async function (req, res, next) {
       description,
     });
   } catch (error) {
-    next({
-      status: "Server Error",
-      message: "Inventory Id out of range.",
-    });
+    console.error('Error:', error);
+    next(error);
   }
 };
 
@@ -90,7 +100,7 @@ invCont.buildAddClassificationPage = async function (req, res, next) {
 invCont.buildAddVehiclePage = async function (req, res, next) {
   try {
     let nav = await utilities.getNav();
-    let classifications = await utilities.buildClassificationList(null);
+    let classifications = await utilities.buildClassificationList();
     const description = "Add Vehicle Page";
     res.render("./inventory/add-vehicle", {
       title: "Add Vehicle",
@@ -117,18 +127,20 @@ invCont.addClassification = async (req, res, next) => {
 
     if (invResult) {
       let grid = await utilities.buildManagementPage();
-      req.flash("notice", `Congratulations, you added ${classification_name}.`);
+      let classifications = await utilities.buildClassificationList();
+      req.flash("notice", `Congratulations, ${classification_name} has been submitted for approval.`);
       res.status(201).render("./inventory/management", {
         title: "Inventory Management",
         nav,
         grid,
         description,
+        classifications,
         errors: null,
       });
     } else {
       req.flash(
         "notice",
-        "Sorry, could not add classification. Please try again.",
+        "Sorry, could not submit classification. Please try again.",
       );
       res.status(501).render("/inventory/add-classification", {
         title: "Add Classification",
@@ -182,7 +194,7 @@ invCont.addVehicle = async (req, res, next) => {
       let grid = await utilities.buildManagementPage();
       req.flash(
         "notice",
-        `Congratulations, you added ${inv_make} ${inv_model}.`,
+        `Congratulations, ${inv_make} ${inv_model} has been submitted for approval.`,
       );
       res.status(201).render("./inventory/management", {
         title: "Inventory Management",
@@ -193,7 +205,7 @@ invCont.addVehicle = async (req, res, next) => {
         errors: null,
       });
     } else {
-      req.flash("notice", "Sorry, could not add vehicle. Please try again.");
+      req.flash("notice", "Sorry, could not submit vehicle. Please try again.");
       res.status(501).render("./inventory/add-vehicle", {
         title: "Add Vehicle",
         nav,
@@ -255,7 +267,7 @@ invCont.updateVehicle = async (req, res, next) => {
 
     if (updateResult) {
       const itemName = `${updateResult.inv_make} ${updateResult.inv_model}`;
-      req.flash("notice", `Congratulations, you updated ${itemName}.`);
+      req.flash("notice", `Congratulations, you submitted ${itemName} edit for approval.`);
       res.redirect("/inv");
     } else {
       name = `${inv_make} ${inv_model}`;
@@ -388,6 +400,104 @@ invCont.deleteVehicle = async function (req, res, next) {
     next({
       status: "Server Error",
       message: "Delete Vehicle Error.",
+    });
+  }
+};
+
+invCont.buildApprovalPage = async function (req, res, next) {
+  try {
+    const grid = await utilities.buildApprovalPage();
+    let nav = await utilities.getNav();
+    const description = "Inventory Approval Page";
+    res.render("./inventory/approval", {
+      title: "Inventory Approval",
+      nav,
+      grid,
+      description,
+      errors: null,
+    });
+  } catch (error) {
+    next({
+      status: "Server Error",
+      message: "Inventory Approval Page Error.",
+    });
+  }
+};
+
+invCont.approveClassification = async function (req, res, next) {
+  try {
+    const classification_id = parseInt(req.params.classificationId);
+    const account_id = res.locals.accountData.account_id;
+    const approveResult = await invModel.approveClassification(classification_id, account_id);
+    if (approveResult) {
+      req.flash("notice", "Classification Approved.");
+      res.redirect("/inv/approval");
+    } else {
+      req.flash("notice", "Sorry, could not approve classification. Please try again.");
+      res.redirect("/inv/approval");
+    }
+  } catch (error) {
+    next({
+      status: "Server Error",
+      message: "Approve Classification Error.",
+    });
+  }
+};
+
+invCont.approveVehicle = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.params.invId);
+    const account_id = res.locals.accountData.account_id;
+    const approveResult = await invModel.approveVehicle(inv_id, account_id);
+    if (approveResult) {
+      req.flash("notice", "Vehicle Approved.");
+      res.redirect("/inv/approval");
+    } else {
+      req.flash("notice", "Sorry, could not approve vehicle. Please try again.");
+      res.redirect("/inv/approval");
+    }
+  } catch (error) {
+    next({
+      status: "Server Error",
+      message: "Approve Vehicle Error.",
+    });
+  }
+};
+
+invCont.rejectClassification = async function (req, res, next) {
+  try {
+    const classification_id = parseInt(req.params.classificationId);
+    const rejectResult = await invModel.rejectClassification(classification_id);
+    if (rejectResult) {
+      req.flash("notice", "Classification Rejected.");
+      res.redirect("/inv/approval");
+    } else {
+      req.flash("notice", "Sorry, could not reject classification. Please try again.");
+      res.redirect("/inv/approval");
+    }
+  } catch (error) {
+    next({
+      status: "Server Error",
+      message: "Reject Classification Error.",
+    });
+  }
+};
+
+invCont.rejectVehicle = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.params.invId);
+    const rejectResult = await invModel.rejectVehicle(inv_id);
+    if (rejectResult) {
+      req.flash("notice", "Vehicle Rejected.");
+      res.redirect("/inv/approval");
+    } else {
+      req.flash("notice", "Sorry, could not reject vehicle. Please try again.");
+      res.redirect("/inv/approval");
+    }
+  } catch (error) {
+    next({
+      status: "Server Error",
+      message: "Reject Vehicle Error.",
     });
   }
 };
