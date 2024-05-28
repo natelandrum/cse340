@@ -290,7 +290,8 @@ nav a {
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  min-width: 50vw;
+  width: 80%;
+  max-width: 450px;
   margin-bottom: 2rem;
 }
 
@@ -484,6 +485,7 @@ textarea:invalid {
 .addVehicle select,
 .editVehicle select {
   display: block;
+  
   max-width: 100%;
 }
 
@@ -497,7 +499,7 @@ textarea:invalid {
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 50vw;
+  width: 100%;
   max-width: 450px;
 }
 
