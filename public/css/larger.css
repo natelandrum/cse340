@@ -35,4 +35,19 @@
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
   }
+
+  nav ul {
+    display: flex;
+  }
+
+  ul.menuLinks,
+  ul.menuLinks.open {
+    flex-direction: row;
+      max-height: 80px;
+      opacity: 1;
+  }
+
+  #hamburgerButton {
+    display: none;
+  }
 }

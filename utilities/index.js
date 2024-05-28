@@ -23,7 +23,7 @@ Util.getNav = async () => {
     .join("");
 
   return `
-    <ul>
+    <ul class="menuLinks">
       <li><a href="/" title="Home page">Home</a></li>
       ${listItems}
     </ul>

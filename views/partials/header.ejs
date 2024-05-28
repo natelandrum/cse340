@@ -9,10 +9,18 @@
     </span>
     <div id="tools">
         <% if (locals.loggedin) { %>
-            <a href="/account">Profile (<%- locals.accountData.account_firstname %>)</a>
+            <a href="/account">My Profile</a>
             <a href="/account/logout" title="Click to log out">Logout</a>
         <% } else {%>
         <a href="/account/login" title="Click to log in">Login</a>
         <% }  %>
     </div>
+    
+        <div id="hamburgerButton">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
 </header>
+
+<script src="/js/menu.js"></script>

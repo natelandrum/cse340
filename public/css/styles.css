@@ -16,7 +16,7 @@ body {
 }
 
 .siteName {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
 }
 
@@ -41,17 +41,70 @@ header {
 }
 
 #tools a {
-  margin: 2rem;
+  margin: 1rem;
 }
+
+#tools a:hover {
+  color: #007bff;
+}
+
+#hamburgerButton {
+    font-size: 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50px;
+    justify-self: flex-end;
+    margin-right: 1rem;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+    width: 38px;
+    height: 4px;
+    background-color: #333333;
+    margin: 6px;
+    transition: 0.4s;
+}
+
+.open .bar1 {
+    transform: translate(0, 10px) rotate(-45deg);
+}
+
+.open .bar2 {
+    opacity: 0;
+}
+
+.open .bar3 {
+    transform: translate(0, -10px) rotate(45deg);
+}
+
+ul.menuLinks {
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.8s ease-in-out, max-height 0.5s ease-in-out;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+}
+
+ul.menuLinks.open {
+    max-height: 500px; /* Adjust this value as needed */
+    opacity: 1;
+}
+
+  
 
 nav {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   margin: 1rem auto;
+  width: 100%;
 }
 
 nav ul {
-  display: flex;
   list-style: none;
 }
 
@@ -269,7 +322,8 @@ nav a {
   cursor: pointer;
   font-size: 16px;
   margin-top: 10px;
-  width: 400px;
+  width: 80%;
+  max-width: 400px;
   align-self: center;
 }
 
@@ -338,8 +392,8 @@ nav a {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
+  font-size: 1rem;
+  margin-top: 1rem;
 }
 
 .password-wrapper {
@@ -430,6 +484,7 @@ textarea:invalid {
 .addVehicle select,
 .editVehicle select {
   display: block;
+  max-width: 100%;
 }
 
 .addClassification form,
@@ -461,7 +516,7 @@ textarea:invalid {
 .editVehicle h2,
 .deleteVehicle h2,
 .update h2 {
-  font-size: 14px;
+  font-size: .8rem;
   color: #1f6aca;
   margin-top: 0;
   margin-bottom: 15px;
@@ -505,7 +560,7 @@ textarea,
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .deleteVehicle button {
@@ -532,7 +587,7 @@ textarea,
   max-width: 400px;
   width: 100%;
   padding: 0.5em;
-  font-size: 1em;
+  font-size: 1rem;
   border: 1px solid black;
   border-radius: 4px;
 }
