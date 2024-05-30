@@ -16,6 +16,18 @@ async function getClassifications() {
   }
 }
 
+async function getApprovedClassifications() {
+  try {
+    return await pool.query(
+      `SELECT *
+       FROM classification
+       WHERE classification_approved = true`,
+    );
+  } catch (error) {
+    console.error(`getallclassifications error: ${error}`);
+  }
+}
+
 async function getUnapprovedClassifications() {
   try {
     return await pool.query(
@@ -256,6 +268,7 @@ async function rejectVehicle(inv_id) {
 
 module.exports = {
   getClassifications,
+  getApprovedClassifications,
   getUnapprovedClassifications,
   getUnapprovedInventory,
   getInventoryByClassificationId,

@@ -80,8 +80,29 @@ Util.buildManagementPage = async function () {
     `;
 };
 
+Util.buildApprovedClassificationList = async function () {
+  const { rows } = await invModel.getApprovedClassifications();
+  let options = rows
+    .map(
+      (row) => `
+    <option value="${row.classification_id}">
+      ${row.classification_name}
+    </option>
+  `,
+    )
+    .join("");
+
+  options =
+    `<option selected disabled value="">Select a classification</option>` +
+    options;
+
+  return options;
+}
+
+
 Util.buildClassificationList = async function (classification_id = null) {
   const { rows } = await invModel.getClassifications();
+  console.log(rows)
   let options = rows
     .map(
       (row) => `

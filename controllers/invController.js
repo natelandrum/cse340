@@ -100,7 +100,7 @@ invCont.buildAddClassificationPage = async function (req, res, next) {
 invCont.buildAddVehiclePage = async function (req, res, next) {
   try {
     let nav = await utilities.getNav();
-    let classifications = await utilities.buildClassificationList();
+    let classifications = await utilities.buildApprovedClassificationList();
     const description = "Add Vehicle Page";
     res.render("./inventory/add-vehicle", {
       title: "Add Vehicle",
