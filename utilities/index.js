@@ -102,7 +102,6 @@ Util.buildApprovedClassificationList = async function () {
 
 Util.buildClassificationList = async function (classification_id = null) {
   const { rows } = await invModel.getClassifications();
-  console.log(rows)
   let options = rows
     .map(
       (row) => `
